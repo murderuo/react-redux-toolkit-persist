@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addUser, logout } from './redux/userSlice';
 import { nanoid } from '@reduxjs/toolkit';
 import { addTodo } from './redux/todosSlice';
+import { getPhotos } from './redux/gallerySlice';
 
 function Main() {
   // const allusers=store.getState()
@@ -14,13 +15,21 @@ function Main() {
 
   const users = state.users.users;
   const todos = state.todos.todos;
+  const photos = state.photoState;
   console.log('users:', users);
   console.log('todos:', todos);
+  console.log('photoState:', photos.photos);
 
   const dispatch = useDispatch();
 
   const [user, setUser] = useState({ id: '', name: '', surname: '' });
   const [todo, setTodo] = useState({ id: '', content: '' });
+
+  useEffect(() => {
+    dispatch(getPhotos());
+    // const pohotos =getPhotos()
+    // console.log(pohotos);
+  }, [dispatch]);
 
   return (
     <>
